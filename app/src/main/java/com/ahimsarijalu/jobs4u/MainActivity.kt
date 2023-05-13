@@ -1,9 +1,12 @@
 package com.ahimsarijalu.jobs4u
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.ahimsarijalu.jobs4u.databinding.ActivityMainBinding
-import com.google.android.material.navigation.NavigationBarView
+import com.ahimsarijalu.jobs4u.ui.home.HomeFragment
+import com.ahimsarijalu.jobs4u.ui.profile.ProfileFragment
+import com.ahimsarijalu.jobs4u.ui.saved.SavedFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -13,22 +16,32 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        replaceFragment(HomeFragment())
 
-        NavigationBarView.OnItemSelectedListener { item ->
-            when(item.itemId) {
-                R.id.menu_home -> true
-                R.id.menu_saved -> true
-                R.id.menu_profile -> true
+        binding.bottomNavigation.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.menu_home -> {
+                    replaceFragment(HomeFragment())
+                    true
+                }
+
+                R.id.menu_saved -> {
+                    replaceFragment(SavedFragment())
+                    true
+                }
+
+                R.id.menu_profile -> {
+                    replaceFragment(ProfileFragment())
+                    true
+                }
+
                 else -> false
             }
         }
+    }
 
-        binding.bottomNavigation.setOnItemReselectedListener { item ->
-            when(item.itemId) {
-                R.id.menu_home -> {}
-                R.id.menu_saved -> {}
-                R.id.menu_profile -> {}
-            }
-        }
+    private fun replaceFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment)
+            .commit()
     }
 }
