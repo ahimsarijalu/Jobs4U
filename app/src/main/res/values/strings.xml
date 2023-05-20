@@ -4,4 +4,16 @@
     <string name="home">Home</string>
     <string name="saved">Saved</string>
     <string name="profile">Profile</string>
+    <string name="searchbar_hint">Search jobs that fits for you</string>
+    <string name="username">username</string>
+
+    <string-array name="work_types">
+        <item>WFO</item>
+        <item>Hybird</item>
+        <item>WFH</item>
+    </string-array>
+
+    <string-array name="experience_level">
+        <item>Senior</item>
+    </string-array>
 </resources>
