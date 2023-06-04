@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/Widget.Material3.CardView.Elevated"
     android:layout_width="match_parent"
-    android:layout_height="200dp"
+    android:layout_height="wrap_content"
     android:layout_marginBottom="16dp">
 
 
@@ -29,7 +29,6 @@
             android:layout_marginStart="18dp"
             android:fontFamily="@font/open_sans_bold"
             android:text="Name"
-            android:textColor="@color/md_theme_light_onPrimaryContainer"
             android:textSize="16sp"
             app:layout_constraintStart_toEndOf="@+id/avatar_share"
             app:layout_constraintTop_toTopOf="@+id/avatar_share" />
@@ -50,11 +49,97 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
             android:fontFamily="@font/open_sans"
             android:text="This is a job ad that contains job description @hrdbacot #lokercot"
-            android:textColor="@color/md_theme_dark_background"
+            app:layout_constraintBottom_toTopOf="@id/imageView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/avatar_share"
             app:layout_constraintTop_toBottomOf="@+id/avatar_share" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imageView"
+            android:layout_width="0dp"
+            android:layout_height="160dp"
+            android:layout_marginEnd="2dp"
+            android:layout_marginBottom="4dp"
+            app:layout_constraintBottom_toTopOf="@+id/imageView3"
+            app:layout_constraintEnd_toStartOf="@+id/imageView2"
+            app:layout_constraintStart_toStartOf="@+id/leftGuideline"
+            app:layout_constraintTop_toBottomOf="@+id/tv_share_content"
+            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Small"
+            tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imageView2"
+            android:layout_width="0dp"
+            android:layout_height="160dp"
+            android:layout_marginStart="2dp"
+            app:layout_constraintEnd_toEndOf="@id/rightGuideline"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/imageView"
+            app:layout_constraintTop_toTopOf="@+id/imageView"
+            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Small"
+            tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imageView3"
+            android:layout_width="0dp"
+            android:layout_height="160dp"
+            android:layout_marginTop="4dp"
+            app:layout_constraintBottom_toTopOf="@+id/guideline5"
+            app:layout_constraintEnd_toStartOf="@id/imageView4"
+            app:layout_constraintStart_toStartOf="@+id/leftGuideline"
+            app:layout_constraintTop_toBottomOf="@id/imageView"
+            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Small"
+            tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imageView4"
+            android:layout_width="0dp"
+            android:layout_height="160dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="4dp"
+            app:layout_constraintBottom_toTopOf="@+id/guideline5"
+            app:layout_constraintEnd_toEndOf="@id/rightGuideline"
+            app:layout_constraintStart_toEndOf="@id/imageView3"
+            app:layout_constraintTop_toBottomOf="@id/imageView2"
+            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Small"
+            tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/leftGuideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="16dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/rightGuideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="16dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintGuide_end="16dp" />
+
+        <Button
+            android:id="@+id/save_btn"
+            style="?attr/materialIconButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:checkable="true"
+            app:icon="@drawable/selection_ic_saved"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

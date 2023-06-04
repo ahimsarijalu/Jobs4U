@@ -7,6 +7,8 @@
     <string name="searchbar_hint">Search jobs that fits for you</string>
     <string name="username">username</string>
 
+    <string name="shared_image_transition">shared_image_transition_%1$d</string>
+
     <string-array name="work_types">
         <item>WFO</item>
         <item>Hybird</item>
@@ -16,4 +18,5 @@
     <string-array name="experience_level">
         <item>Senior</item>
     </string-array>
+
 </resources>

@@ -1,17 +1,14 @@
 package com.ahimsarijalu.jobs4u.ui.home
 
-import android.content.Intent
+import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.ahimsarijalu.jobs4u.R
 import com.ahimsarijalu.jobs4u.data.datasource.local.model.Jobs
 import com.ahimsarijalu.jobs4u.databinding.FragmentHomeBinding
-import com.ahimsarijalu.jobs4u.ui.login.LoginActivity
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class HomeFragment : Fragment() {
 
@@ -45,41 +42,10 @@ class HomeFragment : Fragment() {
 
     }
 
-    private fun setupJobItems() {
-        binding.apply {
-
-            val jobs = listOf(
-                Jobs(
-                    "https://avatar_url",
-                    "Dadang Sudandang",
-                    "@dadanguhuy",
-                    "info loker di PT. Mencari Cinta Sejati hubungi dadangsudandang@company.com @hrdbacot #lokercot"
-                ),
-                Jobs(
-                    "https://avatar_url",
-                    "Dadang Sudandang",
-                    "@dadanguhuy",
-                    "info loker di PT. Mencari Cinta Sejati hubungi dadangsudandang@company.com @hrdbacot #lokercot"
-                ),
-                Jobs(
-                    "https://avatar_url",
-                    "Dadang Sudandang",
-                    "@dadanguhuy",
-                    "info loker di PT. Mencari Cinta Sejati hubungi dadangsudandang@company.com @hrdbacot #lokercot"
-                )
-            )
-
-            rvJobs.apply {
-                layoutManager = LinearLayoutManager(activity)
-                adapter = JobsAdapter(jobs)
-            }
-
-        }
-    }
 
     private fun setupFilter() {
         binding.apply {
-            val filters = listOf("Job Type", "Experience Level", "Work Type")
+            val filters = listOf("Location", "Job Type", "Experience Level", "Work Type")
 
             rvFilter.apply {
                 layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
@@ -88,6 +54,70 @@ class HomeFragment : Fragment() {
 
         }
     }
+
+    private fun setupJobItems() {
+        binding.apply {
+
+            val jobs = listOf(
+                Jobs(
+                    "https://pbs.twimg.com/profile_images/1648905605460148224/aKIxgA9b_normal.jpg",
+                    "Dadang Sudandang",
+                    "@dadanguhuy",
+                    "info loker di PT. Mencari Cinta Sejati hubungi dadangsudandang@company.com @hrdbacot #lokercot",
+                    listOf()
+                ),
+                Jobs(
+                    "https://pbs.twimg.com/profile_images/1648905605460148224/aKIxgA9b_normal.jpg",
+                    "Dadang Sudandang",
+                    "@dadanguhuy",
+                    "info loker di PT. Mencari Cinta Sejati hubungi dadangsudandang@company.com @hrdbacot #lokercot",
+                    listOf(
+                        "https://pbs.twimg.com/media/FxXuYk8aEAA6SBN?format=jpg&name=small"
+                    )
+                ),
+                Jobs(
+                    "https://pbs.twimg.com/profile_images/1648905605460148224/aKIxgA9b_normal.jpg",
+                    "Dadang Sudandang",
+                    "@dadanguhuy",
+                    "info loker di PT. Mencari Cinta Sejati hubungi dadangsudandang@company.com @hrdbacot #lokercot",
+                    listOf(
+                        "https://pbs.twimg.com/media/FxXuYk8aEAA6SBN?format=jpg&name=small",
+                        "https://pbs.twimg.com/media/FxXuZBCacAADdMy?format=jpg&name=small",
+                    )
+                ),
+                Jobs(
+                    "https://pbs.twimg.com/profile_images/1648905605460148224/aKIxgA9b_normal.jpg",
+                    "Dadang Sudandang",
+                    "@dadanguhuy",
+                    "info loker di PT. Mencari Cinta Sejati hubungi dadangsudandang@company.com @hrdbacot #lokercot",
+                    listOf(
+                        "https://pbs.twimg.com/media/FxXuYk8aEAA6SBN?format=jpg&name=small",
+                        "https://pbs.twimg.com/media/FxXuZBCacAADdMy?format=jpg&name=small",
+                        "https://pbs.twimg.com/media/FxXuZgeakAgUY5Y?format=jpg&name=small",
+                    )
+                ),
+                Jobs(
+                    "https://pbs.twimg.com/profile_images/1648905605460148224/aKIxgA9b_normal.jpg",
+                    "Dadang Sudandang",
+                    "@dadanguhuy",
+                    "info loker di PT. Mencari Cinta Sejati hubungi dadangsudandang@company.com @hrdbacot #lokercot",
+                    listOf(
+                        "https://pbs.twimg.com/media/FxXuYk8aEAA6SBN?format=jpg&name=small",
+                        "https://pbs.twimg.com/media/FxXuZBCacAADdMy?format=jpg&name=small",
+                        "https://pbs.twimg.com/media/FxXuZgeakAgUY5Y?format=jpg&name=small",
+                        "https://pbs.twimg.com/media/FxXZ4siaEAAU7r3?format=jpg&name=small"
+                    )
+                )
+            )
+
+            rvJobs.apply {
+                layoutManager = LinearLayoutManager(activity)
+                adapter = JobsAdapter(activity as Activity, jobs)
+            }
+
+        }
+    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

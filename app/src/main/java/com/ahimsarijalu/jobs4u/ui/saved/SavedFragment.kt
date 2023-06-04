@@ -1,68 +1,59 @@
 package com.ahimsarijalu.jobs4u.ui.saved
 
 import android.content.Intent
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.NavController
-import androidx.navigation.NavDestination
-import androidx.navigation.findNavController
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.ahimsarijalu.jobs4u.R
-import com.ahimsarijalu.jobs4u.ui.home.HomeFragment
+import com.ahimsarijalu.jobs4u.databinding.FragmentSavedBinding
 import com.ahimsarijalu.jobs4u.ui.login.LoginActivity
-import com.google.android.material.bottomnavigation.BottomNavigationItemView
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
-class SavedFragment : Fragment(), NavController.OnDestinationChangedListener {
-
+class SavedFragment : Fragment(){
 
     private lateinit var viewModel: SavedViewModel
+
+
+    private var _binding: FragmentSavedBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
+    ): View {
 
-        val isLogin = false
+        _binding = FragmentSavedBinding.inflate(inflater, container, false)
+
+        val isLogin = true
         if (!isLogin) {
             MaterialAlertDialogBuilder(requireContext())
                 .setTitle("Access denied")
                 .setMessage("You need to log in to view this content")
-                .setNegativeButton("Cancel") { dialog, which ->
-                    // Respond to negative button press
+                .setNegativeButton("Cancel") { dialog, _ ->
                     dialog.dismiss()
-                    activity?.findNavController(R.id.bottom_navigation)?.navigate(R.id.nav_home)
+                    findNavController().navigate(R.id.nav_home)
                 }
-                .setPositiveButton("Login") { dialog, which ->
+                .setPositiveButton("Login") { _, _ ->
                     Intent(activity, LoginActivity::class.java).apply {
                         startActivity(this)
-                        activity?.finish()
+                        findNavController().navigate(R.id.nav_home)
                     }
                 }
                 .show()
 
 
         }
-        return inflater.inflate(R.layout.fragment_saved, container, false)
+
+        return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(SavedViewModel::class.java)
-        // TODO: Use the ViewModel
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        viewModel = ViewModelProvider(this)[SavedViewModel::class.java]
     }
 
-    override fun onDestinationChanged(
-        controller: NavController,
-        destination: NavDestination,
-        arguments: Bundle?,
-    ) {
-
-    }
 
 }
