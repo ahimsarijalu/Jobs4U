@@ -44,10 +44,9 @@ class JobsAdapter(private val activity: Activity, private val dataSet: List<Jobs
             tvShareName.text = item.name
             tvShareUsername.text = item.username
             tvShareContent.text = item.content
+            saveBtn.isChecked = item.isSaved
             item.imageUrls?.let { showImage(this, it) }
         }
-
-
     }
 
     override fun getItemCount() = dataSet.size

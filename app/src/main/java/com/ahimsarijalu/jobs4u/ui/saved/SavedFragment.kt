@@ -12,6 +12,8 @@ import com.ahimsarijalu.jobs4u.R
 import com.ahimsarijalu.jobs4u.databinding.FragmentSavedBinding
 import com.ahimsarijalu.jobs4u.ui.login.LoginActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 class SavedFragment : Fragment(){
 
@@ -21,6 +23,8 @@ class SavedFragment : Fragment(){
     private var _binding: FragmentSavedBinding? = null
     private val binding get() = _binding!!
 
+    private var auth = Firebase.auth
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -28,7 +32,7 @@ class SavedFragment : Fragment(){
 
         _binding = FragmentSavedBinding.inflate(inflater, container, false)
 
-        val isLogin = true
+        val isLogin = auth.currentUser != null
         if (!isLogin) {
             MaterialAlertDialogBuilder(requireContext())
                 .setTitle("Access denied")
@@ -44,7 +48,6 @@ class SavedFragment : Fragment(){
                     }
                 }
                 .show()
-
 
         }
 

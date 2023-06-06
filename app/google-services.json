@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "775201859014",
+    "project_id": "jobs4u-prod-alpha",
+    "storage_bucket": "jobs4u-prod-alpha.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:775201859014:android:5100f123563970697bfec7",
+        "android_client_info": {
+          "package_name": "com.ahimsarijalu.jobs4u"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "775201859014-3febdouh6fq7am1l2e91fc834re13ppf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCTrwVH-LSU0YFL7OZ-T7UwPDgbamB0gEM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "775201859014-3febdouh6fq7am1l2e91fc834re13ppf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

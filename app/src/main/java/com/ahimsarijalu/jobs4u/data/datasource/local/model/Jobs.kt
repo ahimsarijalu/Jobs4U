@@ -5,5 +5,6 @@ data class Jobs(
     val name: String,
     val username: String,
     val content: String,
-    val imageUrls: List<String>? = listOf<String>()
+    val isSaved: Boolean,
+    val imageUrls: List<String>? = listOf()
 )
