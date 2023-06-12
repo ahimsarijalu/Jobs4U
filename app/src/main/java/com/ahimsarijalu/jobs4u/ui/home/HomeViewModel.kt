@@ -1,10 +1,12 @@
 package com.ahimsarijalu.jobs4u.ui.home
 
 import androidx.lifecycle.ViewModel
-import com.ahimsarijalu.jobs4u.data.repository.HomeRepository
+import com.ahimsarijalu.jobs4u.data.repository.JobsRepository
 
 class HomeViewModel(
-    homeRepository: HomeRepository
+    private val jobsRepository: JobsRepository,
 ) : ViewModel() {
-    // TODO: Implement the ViewModel
+    fun getAllJobs() = jobsRepository.getAllJobs()
+
+    fun search(keyword: String) = jobsRepository.search(keyword)
 }

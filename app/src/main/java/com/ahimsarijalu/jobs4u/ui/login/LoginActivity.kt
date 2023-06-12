@@ -90,6 +90,8 @@ class ForgotPasswordBottomSheet : BottomSheetDialogFragment() {
     private var _binding: ForgotPasswordBottomSheetBinding? = null
     private val binding get() = _binding!!
 
+    private lateinit var viewModel: LoginViewModel
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -101,6 +103,11 @@ class ForgotPasswordBottomSheet : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        viewModel = ViewModelProvider(
+            this,
+            ViewModelFactory()
+        )[LoginViewModel::class.java]
 
         setupAction()
     }
@@ -117,7 +124,21 @@ class ForgotPasswordBottomSheet : BottomSheetDialogFragment() {
                     error = null
                     isErrorEnabled = false
                 }
-//                TODO("Call send email reset password")
+                viewModel.resetPassword(binding.emailForgotPasswordTextField.editText?.text.toString())
+                    .observe(this) { result ->
+                        when (result) {
+                            is Result.Loading -> { showProgressBar(binding.progressBar, true) }
+                            is Result.Error -> {
+                                showProgressBar(binding.progressBar, false)
+                                showSnackBar(binding.root, result.error)
+                            }
+
+                            is Result.Success -> {
+                                showProgressBar(binding.progressBar, false)
+                                showSnackBar(binding.root, result.data)
+                            }
+                        }
+                    }
             }
         }
 

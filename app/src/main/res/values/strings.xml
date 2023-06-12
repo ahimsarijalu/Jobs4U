@@ -23,6 +23,7 @@
     <string name="error_unvalid_email">Not a valid e-mail</string>
     <string name="app_version">Jobs4U v%1s</string>
     <string name="register_success">Registered successfully</string>
+    <string name="filters">%1s %2s %3s %4s</string>
 
     <string-array name="work_types">
         <item>Work From Office (WFO)</item>

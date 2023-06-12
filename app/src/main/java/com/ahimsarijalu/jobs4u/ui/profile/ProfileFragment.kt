@@ -35,6 +35,16 @@ class ProfileFragment : Fragment() {
     ): View {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
 
+
+
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        viewModel = ViewModelProvider(this, ViewModelFactory())[ProfileViewModel::class.java]
+
         val isLogin = auth.currentUser != null
         if (!isLogin) {
             MaterialAlertDialogBuilder(requireContext())
@@ -51,29 +61,16 @@ class ProfileFragment : Fragment() {
                     }
                 }
                 .show()
+        } else {
+            setupAction()
+            setupView()
         }
-
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        viewModel = ViewModelProvider(this, ViewModelFactory())[ProfileViewModel::class.java]
-
-        setupAction()
-        setupView()
-
-
     }
 
     override fun onResume() {
         if (message != null) showSnackBar(binding.root, message.toString())
         super.onResume()
     }
-
-
-
 
     private fun setupView() {
         viewModel.getUser().observe(viewLifecycleOwner) { result ->
@@ -101,7 +98,7 @@ class ProfileFragment : Fragment() {
                 .setNegativeButton("Cancel") { dialog, _ ->
                     dialog.dismiss()
                 }
-                .setPositiveButton("Login") { _, _ ->
+                .setPositiveButton("Logout") { _, _ ->
                     viewModel.logout().observe(viewLifecycleOwner) { result ->
                         when (result) {
                             is Result.Loading -> showProgressBar(binding.progressBar, true)

@@ -3,7 +3,7 @@ package com.ahimsarijalu.jobs4u.data.repository
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.ahimsarijalu.jobs4u.data.datasource.local.model.JobSeeker
-import com.ahimsarijalu.jobs4u.data.datasource.local.model.Jobs
+import com.ahimsarijalu.jobs4u.data.datasource.local.model.Job
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -28,7 +28,7 @@ class UserRepository {
                 "userId" to user?.uid,
                 "name" to name,
                 "email" to email,
-                "listSavedJobs" to listOf<Jobs>()
+                "listSavedJobs" to listOf<Job>()
             )
             database.collection("jobSeeker")
                 .document(user?.uid.toString())
@@ -88,6 +88,16 @@ class UserRepository {
                 user.updatePassword(password)
             }.await()
             emit(Result.Success("Password has been changed successfully"))
+        } catch (e: Exception) {
+            emit(Result.Error(e.message.toString()))
+        }
+    }
+
+    fun resetPassword(email: String): LiveData<Result<String>> = liveData {
+        emit(Result.Loading)
+        try {
+            auth.sendPasswordResetEmail(email).await()
+            emit(Result.Success("Password reset confirmation link has been sent to your email"))
         } catch (e: Exception) {
             emit(Result.Error(e.message.toString()))
         }

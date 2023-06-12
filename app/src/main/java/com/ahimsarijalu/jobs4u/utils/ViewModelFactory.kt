@@ -7,12 +7,14 @@ import com.ahimsarijalu.jobs4u.ui.home.HomeViewModel
 import com.ahimsarijalu.jobs4u.ui.login.LoginViewModel
 import com.ahimsarijalu.jobs4u.ui.profile.ProfileViewModel
 import com.ahimsarijalu.jobs4u.ui.register.RegisterViewModel
+import com.ahimsarijalu.jobs4u.ui.saved.SavedViewModel
 
 class ViewModelFactory : ViewModelProvider.NewInstanceFactory() {
+    @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return when {
             modelClass.isAssignableFrom(HomeViewModel::class.java) -> {
-                HomeViewModel(Injection.provideHomeRepository()) as T
+                HomeViewModel(Injection.provideJobsRepository()) as T
             }
 
             modelClass.isAssignableFrom(RegisterViewModel::class.java) -> {
@@ -29,6 +31,10 @@ class ViewModelFactory : ViewModelProvider.NewInstanceFactory() {
 
             modelClass.isAssignableFrom(ChangePasswordViewModel::class.java) -> {
                 ChangePasswordViewModel(Injection.provideUserRepository()) as T
+            }
+
+            modelClass.isAssignableFrom(SavedViewModel::class.java) -> {
+                SavedViewModel(Injection.provideJobsRepository()) as T
             }
 
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)

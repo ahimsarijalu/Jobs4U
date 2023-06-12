@@ -8,6 +8,7 @@
 
 
     <!-- NestedScrollingChild goes here (NestedScrollView, RecyclerView, etc.). -->
+
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -46,10 +47,18 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/rv_filter"
                 tools:listitem="@layout/jobs_layout" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     </androidx.core.widget.NestedScrollView>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="visible" />
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"

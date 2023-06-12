@@ -5,5 +5,5 @@ data class JobSeeker(
     val id: String? = "",
     val name: String? = "",
     val email: String? = "",
-    val listSavedJobs: List<Jobs>? = listOf(),
+    val listSavedJobs: List<Job>? = listOf(),
 )

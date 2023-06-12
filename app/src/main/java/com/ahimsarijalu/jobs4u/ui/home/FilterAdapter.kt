@@ -12,6 +12,13 @@ import com.google.android.material.textfield.MaterialAutoCompleteTextView
 class FilterAdapter(private val dataSet: List<String>) :
     RecyclerView.Adapter<FilterAdapter.ListViewHolder>() {
 
+    private lateinit var onItemClickCallback: OnItemClickCallback
+
+    fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
+        this.onItemClickCallback = onItemClickCallback
+    }
+
+
     inner class ListViewHolder(var binding: FilterLayoutBinding) :
         RecyclerView.ViewHolder(binding.root)
 
@@ -27,24 +34,79 @@ class FilterAdapter(private val dataSet: List<String>) :
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
 
 
-        holder.binding.filter.apply {
-            hint = dataSet[position]
-            when (dataSet[position]) {
-                "Location" -> {
-                    (editText as? MaterialAutoCompleteTextView)?.apply {
-                        setSimpleItems(R.array.locations)
-                        inputType = InputType.TYPE_CLASS_TEXT
-                        minWidth = 560
+        holder.binding.apply {
+            filter.apply {
+                hint = dataSet[position]
+                when (dataSet[position]) {
+                    "Location" -> {
+                        (editText as? MaterialAutoCompleteTextView)?.apply {
+                            setSimpleItems(R.array.locations)
+                            inputType = InputType.TYPE_CLASS_TEXT
+                            minWidth = 560
+                            setOnItemClickListener { parent, view, position, id ->
+                                onItemClickCallback.onItemClicked(
+                                    Pair(
+                                        "Location",
+                                        parent.adapter.getItem(position).toString()
+                                    )
+                                )
+                            }
+
+                        }
+                    }
+
+                    "Job Type" -> {
+                        (editText as? MaterialAutoCompleteTextView)?.apply {
+                            setSimpleItems(R.array.job_types)
+                            setOnItemClickListener { parent, _, position, _ ->
+                                onItemClickCallback.onItemClicked(
+                                    Pair(
+                                        "Job Type",
+                                        parent.adapter.getItem(position).toString()
+                                    )
+                                )
+                            }
+                        }
+                    }
+
+                    "Experience Level" -> {
+                        (editText as? MaterialAutoCompleteTextView)?.apply {
+                            setSimpleItems(R.array.experience_level)
+                            setOnItemClickListener { parent, _, position, _ ->
+                                onItemClickCallback.onItemClicked(
+                                    Pair(
+                                        "Experience Level",
+                                        parent.adapter.getItem(position).toString()
+                                    )
+                                )
+                            }
+                        }
+                    }
+
+                    "Work Type" -> {
+                        (editText as? MaterialAutoCompleteTextView)?.apply {
+                            setSimpleItems(R.array.work_types)
+                            setOnItemClickListener { parent, _, position, _ ->
+                                onItemClickCallback.onItemClicked(
+                                    Pair(
+                                        "Work Type",
+                                        parent.adapter.getItem(position).toString()
+                                    )
+                                )
+                            }
+                        }
                     }
                 }
-                "Job Type" -> {(editText as? MaterialAutoCompleteTextView)?.setSimpleItems(R.array.job_types)}
-                "Experience Level" -> {(editText as? MaterialAutoCompleteTextView)?.setSimpleItems(R.array.experience_level)}
-                "Work Type" -> {(editText as? MaterialAutoCompleteTextView)?.setSimpleItems(R.array.work_types)}
             }
-
+            filter.editText?.hint = dataSet[position]
         }
-        holder.binding.filter.editText?.hint = dataSet[position]
+
     }
+
+    interface OnItemClickCallback {
+        fun onItemClicked(data: Pair<String, String>)
+    }
+
 
     override fun getItemCount() = dataSet.size
 

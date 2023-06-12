@@ -138,6 +138,7 @@ class ImageOpenActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityImageOpenBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        supportActionBar?.hide()
 
         initViewPager()
 

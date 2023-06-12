@@ -24,21 +24,27 @@
 
         <TextView
             android:id="@+id/tv_share_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:layout_marginStart="18dp"
+            android:layout_marginEnd="8dp"
             android:fontFamily="@font/open_sans_bold"
             android:text="Name"
             android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@+id/tv_share_username"
+            app:layout_constraintEnd_toStartOf="@+id/save_btn"
             app:layout_constraintStart_toEndOf="@+id/avatar_share"
             app:layout_constraintTop_toTopOf="@+id/avatar_share" />
 
         <TextView
             android:id="@+id/tv_share_username"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="8dp"
             android:fontFamily="@font/open_sans_semibold"
             android:text="username"
+            app:layout_constraintBottom_toBottomOf="@+id/avatar_share"
+            app:layout_constraintEnd_toStartOf="@+id/save_btn"
             app:layout_constraintStart_toStartOf="@+id/tv_share_name"
             app:layout_constraintTop_toBottomOf="@+id/tv_share_name" />
 
@@ -54,7 +60,7 @@
             app:layout_constraintBottom_toTopOf="@id/imageView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/avatar_share"
-            app:layout_constraintTop_toBottomOf="@+id/avatar_share" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_share_username" />
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/imageView"

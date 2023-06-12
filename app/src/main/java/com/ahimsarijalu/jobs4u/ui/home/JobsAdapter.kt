@@ -9,19 +9,28 @@ import androidx.core.app.ActivityOptionsCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.ahimsarijalu.jobs4u.R
-import com.ahimsarijalu.jobs4u.data.datasource.local.model.Jobs
+import com.ahimsarijalu.jobs4u.data.datasource.local.model.Job
 import com.ahimsarijalu.jobs4u.databinding.JobsLayoutBinding
 import com.bumptech.glide.Glide
 
-class JobsAdapter(private val activity: Activity, private val dataSet: List<Jobs>) :
+class JobsAdapter(private val activity: Activity, private val dataSet: List<Job>) :
     RecyclerView.Adapter<JobsAdapter.ListViewHolder>() {
-    inner class ListViewHolder(var binding: JobsLayoutBinding) : RecyclerView.ViewHolder(binding.root)
+
+    private lateinit var onItemCheckedCallback: OnItemCheckedCallback
+
+    fun setOnItemCheckCallback(onItemClickCallback: OnItemCheckedCallback) {
+        this.onItemCheckedCallback = onItemClickCallback
+    }
+
+    inner class ListViewHolder(var binding: JobsLayoutBinding) :
+        RecyclerView.ViewHolder(binding.root)
 
     private val circularProgressDrawable = CircularProgressDrawable(activity).apply {
         strokeWidth = 5f
         centerRadius = 30f
         start()
     }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
         val binding = JobsLayoutBinding.inflate(
             LayoutInflater.from(parent.context),
@@ -37,16 +46,22 @@ class JobsAdapter(private val activity: Activity, private val dataSet: List<Jobs
 
         holder.binding.apply {
             Glide.with(holder.itemView)
-                .load(item.avatar_url)
+                .load(item.avatarUrl)
                 .circleCrop()
                 .placeholder(circularProgressDrawable)
                 .into(avatarShare)
             tvShareName.text = item.name
             tvShareUsername.text = item.username
-            tvShareContent.text = item.content
-            saveBtn.isChecked = item.isSaved
-            item.imageUrls?.let { showImage(this, it) }
+            tvShareContent.text = item.text
+            saveBtn.isChecked = item.saved as Boolean
+            item.allImage?.let { showImage(this, it) }
+
+            saveBtn.setOnCheckedChangeListener { _, isChecked ->
+                saveBtn.isChecked = isChecked
+                onItemCheckedCallback.onItemChecked(holder, item, isChecked)
+            }
         }
+
     }
 
     override fun getItemCount() = dataSet.size
@@ -128,6 +143,10 @@ class JobsAdapter(private val activity: Activity, private val dataSet: List<Jobs
             targetView,
             targetView.transitionName
         )
+    }
+
+    interface OnItemCheckedCallback {
+        fun onItemChecked(viewHolder: ListViewHolder, jobData: Job, isChecked: Boolean)
     }
 
 }
