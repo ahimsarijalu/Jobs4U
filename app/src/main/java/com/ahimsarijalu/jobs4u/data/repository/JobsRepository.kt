@@ -14,6 +14,7 @@ import com.algolia.search.model.IndexName
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
 
@@ -35,7 +36,7 @@ class JobsRepository {
         emit(Result.Loading)
         try {
             val listOfJobs = mutableListOf<Job>()
-            val response = database.collection("jobs").get().await()
+            val response = database.collection("jobs").orderBy("tweetId", Query.Direction.DESCENDING).get().await()
             for (document in response) {
                 val data = document.data
                 listOfJobs.add(

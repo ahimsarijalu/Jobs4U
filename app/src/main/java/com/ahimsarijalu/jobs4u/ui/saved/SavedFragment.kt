@@ -124,6 +124,7 @@ class SavedFragment : Fragment() {
                                 } else {
                                     viewModel.removeSavedJob(jobData)
                                         .observe(viewLifecycleOwner) { result ->
+
                                             processResult(result)
                                         }
                                 }

@@ -27,7 +27,7 @@
         android:layout_marginTop="8dp"
         android:fontFamily="@font/open_sans_bold"
         android:text="@string/register"
-        android:textColor="@color/md_theme_dark_onPrimary"
+        android:textColor="?attr/colorPrimary"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logo_imageView" />
 
