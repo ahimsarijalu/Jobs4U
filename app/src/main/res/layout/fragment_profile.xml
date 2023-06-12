@@ -45,6 +45,7 @@
                 android:fontFamily="@font/open_sans_bold"
                 android:text="Name"
                 android:textSize="16sp"
+                android:textColor="?attr/colorPrimary"
                 app:layout_constraintStart_toEndOf="@+id/profile_avatar"
                 app:layout_constraintTop_toTopOf="@+id/profile_avatar" />
 
@@ -55,6 +56,7 @@
                 android:layout_marginBottom="8dp"
                 android:fontFamily="@font/open_sans_semibold"
                 android:text="name@mail.com"
+                android:textColor="?attr/colorPrimary"
                 app:layout_constraintBottom_toBottomOf="@+id/profile_avatar"
                 app:layout_constraintStart_toStartOf="@+id/tv_profile_name" />
         </androidx.constraintlayout.widget.ConstraintLayout>
