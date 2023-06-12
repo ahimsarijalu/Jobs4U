@@ -1,6 +1,5 @@
 package com.ahimsarijalu.jobs4u.data.repository
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.ahimsarijalu.jobs4u.data.datasource.local.model.Job
@@ -83,7 +82,6 @@ class JobsRepository {
 
             emit(Result.Success(listOfJobs))
         } catch (e: Exception) {
-            Log.d("DEBUG", e.message.toString())
             emit(Result.Error(e.message.toString()))
         }
     }
@@ -138,7 +136,21 @@ class JobsRepository {
         try {
             val query = query {
                 query = keyword
-                hitsPerPage = 10
+            }
+
+            val response = index.search(query)
+            val data = response.hits.deserialize(Job.serializer())
+            emit(Result.Success(data))
+        } catch (e: Exception) {
+            emit(Result.Error(e.message.toString()))
+        }
+    }
+
+    fun filter(filters: String): LiveData<Result<List<Job>>> = liveData {
+        emit(Result.Loading)
+        try {
+            val query = query {
+                query = filters
             }
 
             val response = index.search(query)
@@ -155,4 +167,8 @@ class JobsRepository {
     }
 
 }
+
+
+
+
 

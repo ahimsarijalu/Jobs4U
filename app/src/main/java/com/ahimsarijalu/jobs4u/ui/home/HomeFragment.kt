@@ -3,6 +3,7 @@ package com.ahimsarijalu.jobs4u.ui.home
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -52,7 +53,7 @@ class HomeFragment : Fragment() {
             searchView.editText
                 .setOnEditorActionListener { v, actionId, event ->
                     searchBar.text = searchView.text
-                    viewModel.search(searchView.text.toString())
+                    viewModel.search(getString(R.string.query, searchView.text, filter))
                         .observe(viewLifecycleOwner) { result ->
                             when (result) {
                                 is Result.Loading -> {
@@ -117,7 +118,7 @@ class HomeFragment : Fragment() {
                     ) {
                         when (data.first) {
                             "Location" -> {
-                                location = data.second
+                                location = data.second.substring(data.second.indexOf(' ') + 1)
                                 filter = getString(
                                     R.string.filters,
                                     location,
@@ -132,7 +133,7 @@ class HomeFragment : Fragment() {
                                 filter = getString(
                                     R.string.filters,
                                     location,
-                                    jobType,
+                                    if (jobType == expLevel) "" else jobType,
                                     expLevel,
                                     workType
                                 )
@@ -144,7 +145,7 @@ class HomeFragment : Fragment() {
                                     R.string.filters,
                                     location,
                                     jobType,
-                                    expLevel,
+                                    if (expLevel == jobType) "" else expLevel,
                                     workType
                                 )
                             }
@@ -160,20 +161,23 @@ class HomeFragment : Fragment() {
                                 )
                             }
                         }
-                        viewModel.search(filter).observe(viewLifecycleOwner) { result ->
-                            when (result) {
-                                is Result.Loading -> showProgressBar(binding.progressBar, true)
-                                is Result.Error -> {
-                                    showProgressBar(binding.progressBar, false)
-                                    showSnackBar(binding.root, result.error)
-                                }
 
-                                is Result.Success -> {
-                                    showProgressBar(binding.progressBar, false)
-                                    setupJobItems(result.data)
+                        Log.d("DEBUG filter", filter)
+                        viewModel.filter(getString(R.string.query, searchView.text, filter))
+                            .observe(viewLifecycleOwner) { result ->
+                                when (result) {
+                                    is Result.Loading -> showProgressBar(binding.progressBar, true)
+                                    is Result.Error -> {
+                                        showProgressBar(binding.progressBar, false)
+                                        showSnackBar(binding.root, result.error)
+                                    }
+
+                                    is Result.Success -> {
+                                        showProgressBar(binding.progressBar, false)
+                                        setupJobItems(result.data)
+                                    }
                                 }
                             }
-                        }
                     }
                 })
 

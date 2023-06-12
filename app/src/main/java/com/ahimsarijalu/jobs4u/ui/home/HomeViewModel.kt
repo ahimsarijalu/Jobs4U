@@ -9,4 +9,6 @@ class HomeViewModel(
     fun getAllJobs() = jobsRepository.getAllJobs()
 
     fun search(keyword: String) = jobsRepository.search(keyword)
+
+    fun filter(keyword: String) = jobsRepository.filter(keyword)
 }
