@@ -41,7 +41,7 @@ class JobsRepository {
                 val data = document.data
                 listOfJobs.add(
                     Job(
-                        jobId = data["tweetId"].toString(),
+                        tweetId = data["tweetId"].toString(),
                         avatarUrl = data["avatarUrl"] as String,
                         name = data["name"] as String,
                         username = data["username"] as String,
@@ -69,7 +69,7 @@ class JobsRepository {
                 for (job in userData.listSavedJobs) {
                     listOfJobs.add(
                         Job(
-                            job.jobId,
+                            job.tweetId,
                             job.avatarUrl,
                             job.name,
                             job.username,
@@ -92,7 +92,7 @@ class JobsRepository {
         emit(Result.Loading)
         try {
             val jobData = Job(
-                jobId = job.jobId,
+                tweetId = job.tweetId,
                 avatarUrl = job.avatarUrl,
                 name = job.name,
                 username = job.username,
@@ -102,7 +102,7 @@ class JobsRepository {
             )
             database.collection("jobSeeker").document(user?.uid.toString())
                 .update("listSavedJobs", FieldValue.arrayUnion(jobData)).await()
-            database.collection("jobs").document(job.jobId)
+            database.collection("jobs").document(job.tweetId)
                 .update("listUserSaved", FieldValue.arrayUnion(user?.uid))
             emit(Result.Success("Job saved successfully"))
         } catch (e: Exception) {
@@ -114,7 +114,7 @@ class JobsRepository {
         emit(Result.Loading)
         try {
             val jobData = Job(
-                jobId = job.jobId,
+                tweetId = job.tweetId,
                 avatarUrl = job.avatarUrl,
                 name = job.name,
                 username = job.username,
@@ -124,7 +124,7 @@ class JobsRepository {
             )
             database.collection("jobSeeker").document(user?.uid.toString())
                 .update("listSavedJobs", FieldValue.arrayRemove(jobData)).await()
-            database.collection("jobs").document(job.jobId)
+            database.collection("jobs").document(job.tweetId)
                 .update("listUserSaved", FieldValue.arrayRemove(user?.uid))
             emit(Result.Success("Job removed successfully"))
         } catch (e: Exception) {

@@ -82,6 +82,7 @@ class SavedFragment : Fragment() {
 
                 is Result.Success -> {
                     showProgressBar(binding.progressBar, false)
+                    binding.tvNoJobsSaved.visibility = if (result.data.isEmpty()) View.VISIBLE else View.GONE
                     binding.rvSaved.apply {
                         layoutManager = LinearLayoutManager(activity)
                         val rvAdapter = JobsAdapter(activity as Activity, result.data)
@@ -89,7 +90,7 @@ class SavedFragment : Fragment() {
 
                         val user = Firebase.auth.currentUser
 
-                        rvAdapter.setOnItemCheckCallback(object :
+                        rvAdapter.setOnItemCheckedCallback(object :
                             JobsAdapter.OnItemCheckedCallback {
                             override fun onItemChecked(
                                 viewHolder: JobsAdapter.ListViewHolder,
@@ -124,7 +125,6 @@ class SavedFragment : Fragment() {
                                 } else {
                                     viewModel.removeSavedJob(jobData)
                                         .observe(viewLifecycleOwner) { result ->
-
                                             processResult(result)
                                         }
                                 }

@@ -18,8 +18,8 @@ class JobsAdapter(private val activity: Activity, private val dataSet: List<Job>
 
     private lateinit var onItemCheckedCallback: OnItemCheckedCallback
 
-    fun setOnItemCheckCallback(onItemClickCallback: OnItemCheckedCallback) {
-        this.onItemCheckedCallback = onItemClickCallback
+    fun setOnItemCheckedCallback(onItemCheckedCallback: OnItemCheckedCallback) {
+        this.onItemCheckedCallback = onItemCheckedCallback
     }
 
     inner class ListViewHolder(var binding: JobsLayoutBinding) :

@@ -40,7 +40,10 @@ class FilterAdapter(private val dataSet: List<String>) :
                 when (dataSet[position]) {
                     "Location" -> {
                         (editText as? MaterialAutoCompleteTextView)?.apply {
-                            setSimpleItems(R.array.locations)
+                            setSimpleItems(
+                                holder.itemView.resources.getStringArray(R.array.locations)
+                                    .sortedBy { it.split(" ")[1] }.toTypedArray()
+                            )
                             inputType = InputType.TYPE_CLASS_TEXT
                             minWidth = 560
                             setOnItemClickListener { parent, view, position, id ->

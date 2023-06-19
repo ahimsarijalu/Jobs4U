@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Job(
-    val jobId: String = "",
+    val tweetId: String = "",
     val avatarUrl: String = "",
     val name: String = "",
     val username: String = "",

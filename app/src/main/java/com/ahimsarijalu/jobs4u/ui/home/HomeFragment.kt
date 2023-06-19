@@ -3,7 +3,6 @@ package com.ahimsarijalu.jobs4u.ui.home
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +15,6 @@ import com.ahimsarijalu.jobs4u.data.datasource.local.model.Job
 import com.ahimsarijalu.jobs4u.data.repository.Result
 import com.ahimsarijalu.jobs4u.databinding.FragmentHomeBinding
 import com.ahimsarijalu.jobs4u.ui.login.LoginActivity
-import com.ahimsarijalu.jobs4u.ui.saved.SavedViewModel
 import com.ahimsarijalu.jobs4u.utils.ViewModelFactory
 import com.ahimsarijalu.jobs4u.utils.showProgressBar
 import com.ahimsarijalu.jobs4u.utils.showSnackBar
@@ -162,7 +160,6 @@ class HomeFragment : Fragment() {
                             }
                         }
 
-                        Log.d("DEBUG filter", filter)
                         viewModel.filter(getString(R.string.query, searchView.text, filter))
                             .observe(viewLifecycleOwner) { result ->
                                 when (result) {
@@ -187,7 +184,9 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupJobItems(jobs: List<Job>) {
+
         binding.apply {
+            tvNoJobs.visibility = if (jobs.isEmpty()) View.VISIBLE else View.GONE
             rvJobs.apply {
                 layoutManager = LinearLayoutManager(activity)
                 val rvAdapter = JobsAdapter(
@@ -196,14 +195,10 @@ class HomeFragment : Fragment() {
                 )
                 adapter = rvAdapter
 
-                val savedViewModel = ViewModelProvider(
-                    this@HomeFragment,
-                    ViewModelFactory()
-                )[SavedViewModel::class.java]
 
                 val user = Firebase.auth.currentUser
 
-                rvAdapter.setOnItemCheckCallback(object :
+                rvAdapter.setOnItemCheckedCallback(object :
                     JobsAdapter.OnItemCheckedCallback {
                     override fun onItemChecked(
                         viewHolder: JobsAdapter.ListViewHolder,
@@ -212,7 +207,7 @@ class HomeFragment : Fragment() {
                     ) {
                         if (isChecked) {
                             if (user != null) {
-                                savedViewModel.saveJob(jobData)
+                                viewModel.saveJob(jobData)
                                     .observe(viewLifecycleOwner) { result ->
                                         processResult(result)
                                     }
@@ -236,7 +231,7 @@ class HomeFragment : Fragment() {
                                     .show()
                             }
                         } else {
-                            savedViewModel.removeSavedJob(jobData)
+                            viewModel.removeSavedJob(jobData)
                                 .observe(viewLifecycleOwner) { result ->
                                     processResult(result)
                                 }
