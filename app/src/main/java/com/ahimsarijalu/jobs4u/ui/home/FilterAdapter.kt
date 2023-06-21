@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ahimsarijalu.jobs4u.R
 import com.ahimsarijalu.jobs4u.databinding.FilterLayoutBinding
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
+import com.google.android.material.textfield.TextInputLayout
 
 
 class FilterAdapter(private val dataSet: List<String>) :
@@ -46,16 +47,18 @@ class FilterAdapter(private val dataSet: List<String>) :
                             )
                             inputType = InputType.TYPE_CLASS_TEXT
                             minWidth = 560
-                            setOnItemClickListener { parent, view, position, id ->
+                            setOnItemClickListener { parent, _, position, _ ->
                                 onItemClickCallback.onItemClicked(
                                     Pair(
                                         "Location",
                                         parent.adapter.getItem(position).toString()
                                     )
                                 )
+                                showClearButton("Location")
                             }
 
                         }
+
                     }
 
                     "Job Type" -> {
@@ -68,6 +71,7 @@ class FilterAdapter(private val dataSet: List<String>) :
                                         parent.adapter.getItem(position).toString()
                                     )
                                 )
+                                showClearButton("Job Type")
                             }
                         }
                     }
@@ -82,6 +86,7 @@ class FilterAdapter(private val dataSet: List<String>) :
                                         parent.adapter.getItem(position).toString()
                                     )
                                 )
+                                showClearButton("Experience Level")
                             }
                         }
                     }
@@ -91,11 +96,13 @@ class FilterAdapter(private val dataSet: List<String>) :
                             setSimpleItems(R.array.work_types)
                             setOnItemClickListener { parent, _, position, _ ->
                                 onItemClickCallback.onItemClicked(
+
                                     Pair(
                                         "Work Type",
                                         parent.adapter.getItem(position).toString()
                                     )
                                 )
+                                showClearButton("Work Type")
                             }
                         }
                     }
@@ -104,6 +111,21 @@ class FilterAdapter(private val dataSet: List<String>) :
             filter.editText?.hint = dataSet[position]
         }
 
+    }
+
+    private fun MaterialAutoCompleteTextView.showClearButton(filterType: String) {
+        val textInputLayout = parent.parent as? TextInputLayout
+        textInputLayout?.endIconMode = TextInputLayout.END_ICON_CLEAR_TEXT
+        textInputLayout?.setEndIconOnClickListener {
+            setText("")
+            hideClearButton()
+            onItemClickCallback.onItemClicked(Pair(filterType, ""))
+        }
+    }
+
+    private fun MaterialAutoCompleteTextView.hideClearButton() {
+        val textInputLayout = parent.parent as? TextInputLayout
+        textInputLayout?.endIconMode = TextInputLayout.END_ICON_DROPDOWN_MENU
     }
 
     interface OnItemClickCallback {

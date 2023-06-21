@@ -125,7 +125,21 @@ class SavedFragment : Fragment() {
                                 } else {
                                     viewModel.removeSavedJob(jobData)
                                         .observe(viewLifecycleOwner) { result ->
-                                            processResult(result)
+                                            when (result) {
+                                                is Result.Loading -> showProgressBar(binding.progressBar, true)
+                                                is Result.Error -> {
+                                                    showProgressBar(binding.progressBar, false)
+                                                    showSnackBar(binding.root, result.error)
+                                                }
+
+                                                is Result.Success -> {
+                                                    showProgressBar(binding.progressBar, false)
+                                                    showSnackBar(binding.root, result.data)
+                                                    rvAdapter.removeItem(jobData)
+                                                    binding.tvNoJobsSaved.visibility = View.VISIBLE
+                                                }
+                                            }
+
                                         }
                                 }
                             }

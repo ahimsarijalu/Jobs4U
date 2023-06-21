@@ -13,7 +13,7 @@ import com.ahimsarijalu.jobs4u.data.datasource.local.model.Job
 import com.ahimsarijalu.jobs4u.databinding.JobsLayoutBinding
 import com.bumptech.glide.Glide
 
-class JobsAdapter(private val activity: Activity, private val dataSet: List<Job>) :
+class JobsAdapter(private val activity: Activity, private var dataSet: List<Job>) :
     RecyclerView.Adapter<JobsAdapter.ListViewHolder>() {
 
     private lateinit var onItemCheckedCallback: OnItemCheckedCallback
@@ -143,6 +143,14 @@ class JobsAdapter(private val activity: Activity, private val dataSet: List<Job>
             targetView,
             targetView.transitionName
         )
+    }
+
+    fun removeItem(jobData: Job) {
+        val index = dataSet.indexOf(jobData)
+        if (index != -1) {
+            dataSet = dataSet.toMutableList().apply { removeAt(index) }
+            notifyItemRemoved(index)
+        }
     }
 
     interface OnItemCheckedCallback {
